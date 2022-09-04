@@ -1,0 +1,59 @@
+version: '3'
+
+services:
+  order-mysql:
+    image: mysql
+    container_name: mysql_${PROJECT_NAME}
+    restart: always
+    command: 
+      --default-authentication-plugin=mysql_native_password
+      --sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: order
+    volumes:
+      - ${VOLUME_PATH}/mysql/data:/var/lib/mysql
+    networks:
+      - web_service
+
+  golang-order:
+    build:
+      context: .
+    container_name: ${PROJECT_NAME}
+    restart: always
+    ports:
+      - 9999:8080
+    environment:
+      - ENV=${ENV} # 各站環境變數
+      - SERVICE=all
+      - PROJECT_NAME=${PROJECT_NAME} # 專案名稱
+    working_dir: /go/src/${PROJECT_NAME}
+    volumes:
+      - .:/go/src/${PROJECT_NAME}
+    labels:
+      - "traefik.http.routers.golang-${PROJECT_NAME}.rule=Host(`${PROJECT_NAME}.local.com`)"
+      - "traefik.http.services.golang-${PROJECT_NAME}.loadbalancer.server.port=8080"
+    networks:
+      - web_service
+    command: "air -c .air.toml"
+
+  redis-order:
+    image: redis:alpine
+    container_name: redis_${PROJECT_NAME}
+    # 設定最大的TCP連線
+    sysctls:
+      net.core.somaxconn: 4096
+    restart: always
+    volumes:
+      - ${VOLUME_PATH}/redis:/data
+      - ./docker/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+    # 指定使用那一條網路
+    networks:
+      - web_service
+
+networks:
+  web_service:
+    external: true
