@@ -1,0 +1,17 @@
+master:
+  # master db 設定
+  host: mysql_order
+  username: root
+  password: root
+  database: order
+
+slave:
+  # slave db 設定
+  host: mysql_order
+  username: root
+  password: root
+  database: order
+redis:
+  redisHost: redis_order
+  redisPort: 6379
+  redisPassword: ""

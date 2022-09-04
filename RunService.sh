@@ -45,7 +45,7 @@ fi
 # 專案名稱(取當前資料夾路徑最後一個資料夾名稱)
 PROJECT_NAME=${WORK_PATH##*/}
 # 環境變數
-ENV="local"
+ENV="local-docker"
 # swagger path
 SWAGGER_PATH="$GOPATH/pkg/mod"
 

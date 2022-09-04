@@ -32,7 +32,7 @@ func Run() {
 	case "grpc":
 	// 本機環境執行兩種服務
 	case "all":
-		go schedule.Run()
+		// go schedule.Run()
 		server.Run()
 	default:
 		_ = helper.ErrorHandle(global.FatalLog, errorcode.Code.ServiceIsNotExist, "")

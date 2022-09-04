@@ -59,5 +59,11 @@ jobs = []*CronJob{
 ```
 
 ---
+## 建立 db table & 關聯
+```
+ENV=local go run migrations/init.go
+```
+
+---
 ## DB 結構關聯圖
 - 文件 [連結](https://app.diagrams.net/#G1zoB9UmNjqfcUc-vgMqUYULoSbZvaRm9t)

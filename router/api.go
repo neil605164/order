@@ -2,6 +2,7 @@ package router
 
 import (
 	"net/http"
+	"order/app/handler/orderh"
 	"order/app/handler/userh"
 	"os"
 	"time"
@@ -34,10 +35,11 @@ func LoadBackendRouter(r *gin.Engine) {
 
 	order := api.Group("/order")
 	{
-		order.GET("")
-		order.POST("")
+		order.GET("", orderh.OrderList)
+		order.GET("/:id", orderh.OrderDetail)
+		order.POST("", orderh.CreateOrder)
 		order.PUT("/:id")
-		order.DELETE("/:id")
+		order.DELETE("/:id", orderh.DeleteOrder)
 	}
 
 }

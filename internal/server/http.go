@@ -32,7 +32,7 @@ func Run() {
 
 	// 本機開發需要顯示 Gin Log
 	var r *gin.Engine
-	if os.Getenv("ENV") == "local" {
+	if os.Getenv("ENV") == "local" || os.Getenv("ENV") == "local-docker" {
 		r = gin.New()
 		r.Use(gin.Logger())
 	} else {

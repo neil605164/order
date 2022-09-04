@@ -1,6 +1,10 @@
 package structer
 
-import "time"
+import (
+	"time"
+
+	"google.golang.org/genproto/googleapis/type/decimal"
+)
 
 type CreateReq struct {
 	Username             string    `json:"username" validate:"required" example:"neil"`
@@ -10,4 +14,18 @@ type CreateReq struct {
 	Birthday             time.Time `json:"birthday" validate:"required" example:"2022-07-24T00:00:00Z"`
 	MemberNo             string    `json:"-"`
 	Pwd                  string    `json:"-"`
+}
+
+type CreateOrderReq struct {
+	ProductID uint64           `json:"productId" validate:"required" example:"1"`
+	Behavior  string           `json:"behavior" validate:"required,oneof=buy sell" example:"buy"`
+	Price     *decimal.Decimal `json:"price" validate:"required" example:"5"`
+	Amount    int              `json:"amount" validate:"required" example:"10"`
+}
+
+type UpdateOrderReq struct {
+	ProductID uint64           `json:"productId" validate:"required" example:"1"`
+	Behavior  string           `json:"behavior" validate:"required,oneof=buy sell" example:"buy"`
+	Price     *decimal.Decimal `json:"price" validate:"required" example:"5"`
+	Amount    int              `json:"amount" validate:"required" example:"10"`
 }
