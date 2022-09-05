@@ -33,6 +33,13 @@ type Errorcode struct {
 	GetUserListError       NewErrorCode
 	CreateUserFail         NewErrorCode
 	UpdateUserFail         NewErrorCode
+	IllegalAmount          NewErrorCode
+	GetProductByIdError    NewErrorCode
+	ProductNotExist        NewErrorCode
+	CreateOrderFail        NewErrorCode
+	RedisSubscribeStart    NewErrorCode
+	RedisSubscribeFail     NewErrorCode
+	QueueStop              NewErrorCode
 }
 
 var Code = Errorcode{
@@ -59,9 +66,20 @@ var Code = Errorcode{
 	CryptionError:          NewErrorCode{1017, "Cryption Error"},            // 加密錯誤
 	BindParamError:         NewErrorCode{1018, "Bind Param Error"},          // 取參數錯誤
 	ValidateParamError:     NewErrorCode{1019, "ValidateParamError"},        // 驗證參數錯誤
+	RedisSubscribeStart:    NewErrorCode{1010, "Redis Subscribe Start"},     // Redis Queue Start
+	RedisSubscribeFail:     NewErrorCode{1011, "Redis Subscribe Fail"},      // Redis Queue Fail
+	QueueStop:              NewErrorCode{1012, "Queue Stop"},                // Queue Stop
 
 	// 2000 會員錯誤代碼
 	GetUserListError: NewErrorCode{2000, "Get User List Error"}, // 取會員清單錯誤
 	CreateUserFail:   NewErrorCode{2001, "Create User Fail"},    // 建立會員失敗
 	UpdateUserFail:   NewErrorCode{2002, "Update User Fail"},    // 更新會員失敗
+
+	// 3000 訂單錯誤代碼
+	IllegalAmount:   NewErrorCode{3000, "Illegal Amount"},    // 不合法的金額
+	CreateOrderFail: NewErrorCode{3001, "Create Order Fail"}, // 建立訂單錯誤
+
+	// 4000 產品錯誤代碼
+	GetProductByIdError: NewErrorCode{4000, "Get Product By Id Error"}, // 透過產品 id 取產品資料錯誤
+	ProductNotExist:     NewErrorCode{4001, "Product Not Exist"},       // 產品不存在
 }

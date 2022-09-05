@@ -1,11 +1,13 @@
 package entry
 
 import (
+	"context"
 	"fmt"
 	"order/app/global"
 	"order/app/global/errorcode"
 	"order/app/global/helper"
 	"order/internal/bootstrap"
+	redisqueue "order/internal/redis-queue"
 	"order/internal/schedule"
 	"order/internal/server"
 	"os"
@@ -30,7 +32,13 @@ func Run() {
 		schedule.Run()
 	// 執行 grpc 服務
 	case "grpc":
-	// 本機環境執行兩種服務
+	// 執行 queue 服務
+	case "queue":
+		// 本機環境執行兩種服務
+		// 設定優雅結束程序[監聽]
+		bootstrap.SetupQueueGracefulSignal()
+		redisqueue.Run(context.Background())
+
 	case "all":
 		// go schedule.Run()
 		server.Run()

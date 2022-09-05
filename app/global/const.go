@@ -83,3 +83,17 @@ const (
 	LetterIdxMask = 1<<LetterIdxBits - 1 // All 1-bits, as many as letterIdxBits
 	LetterIdxMax  = 63 / LetterIdxBits   // # of letter indices fitting in 63 bits
 )
+
+/** 訂單交易狀態 **/
+const (
+	OrderUnpaid   = "unpaid"   // 尚未付款
+	OrderHandling = "handling" // 處理中
+	OrderSuccess  = "success"  // 成功
+	OrderFailed   = "failed"   // 失敗
+	OrderCanceled = "canceled" // 取消
+)
+
+/** Queue channel 名稱 **/
+const (
+	RedisQueueChannel = "queue"
+)

@@ -158,7 +158,7 @@ func warn(result string, params ...interface{}) string {
 
 	errorLog.HasError = true
 	// LogIDentity log 唯一碼目前不需要
-	errorLog.LogIDentity = md5EncryptionWithTime(randString(6))
+	errorLog.LogIDentity = md5EncryptionWithTime(RandString(6))
 	errorLog.Result = result
 	errorLog.Params = params
 	getFilePath(&errorLog)
@@ -205,7 +205,7 @@ func fatal(result string, params ...interface{}) string {
 
 	errorLog.HasError = true
 	// LogIDentity log 唯一碼目前不需要
-	errorLog.LogIDentity = md5EncryptionWithTime(randString(6))
+	errorLog.LogIDentity = md5EncryptionWithTime(RandString(6))
 	errorLog.Result = result
 	errorLog.Params = params
 	getFilePath(&errorLog)
@@ -251,7 +251,7 @@ func success(result string, params ...interface{}) string {
 
 	errorLog.HasError = true
 	// LogIDentity log 唯一碼目前不需要
-	errorLog.LogIDentity = md5EncryptionWithTime(randString(6))
+	errorLog.LogIDentity = md5EncryptionWithTime(RandString(6))
 	errorLog.Result = result
 	errorLog.Params = params
 	getFilePath(&errorLog)
@@ -280,8 +280,8 @@ func md5EncryptionWithTime(str string) string {
 	return md5Str
 }
 
-// randString 生成指定長度的字符串
-func randString(length int) string {
+// RandString 生成指定長度的字符串
+func RandString(length int) string {
 	return stringWithCharset(length, charset)
 }
 

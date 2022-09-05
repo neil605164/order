@@ -50,3 +50,8 @@ type RespStatus struct {
 	Datetime    time.Time `json:"datetime" example:"2022-07-21T12:19:39-04:00"`
 	LogIDentity string    `json:"logID" example:"qw13er65tyui74rg22o"`
 }
+
+type RedisPubFormat struct {
+	Type string
+	Data interface{}
+}
