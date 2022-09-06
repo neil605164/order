@@ -4,10 +4,11 @@ import (
 	"order/app/global"
 	"order/app/global/errorcode"
 	"order/app/global/helper"
+	"order/app/models"
 )
 
 // CreateOrder 建立訂單
-func (r *repo) CreateOrder(order map[string]interface{}) (apiErr errorcode.Error) {
+func (r *repo) CreateOrder(order models.Order) (apiErr errorcode.Error) {
 	db, apiErr := r.DB.DBConn()
 	if apiErr != nil {
 		return
@@ -15,7 +16,7 @@ func (r *repo) CreateOrder(order map[string]interface{}) (apiErr errorcode.Error
 
 	// 建立訂單
 	if err := db.Create(&order).Error; err != nil {
-		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.CreateUserFail, err, order)
+		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.CreateOrderFail, err, order)
 		return
 	}
 

@@ -30,9 +30,6 @@ type Errorcode struct {
 	CryptionError          NewErrorCode
 	BindParamError         NewErrorCode
 	ValidateParamError     NewErrorCode
-	GetUserListError       NewErrorCode
-	CreateUserFail         NewErrorCode
-	UpdateUserFail         NewErrorCode
 	IllegalAmount          NewErrorCode
 	GetProductByIdError    NewErrorCode
 	ProductNotExist        NewErrorCode
@@ -40,6 +37,11 @@ type Errorcode struct {
 	RedisSubscribeStart    NewErrorCode
 	RedisSubscribeFail     NewErrorCode
 	QueueStop              NewErrorCode
+	GetOrderByIdError      NewErrorCode
+	CanNotDeleteOrder      NewErrorCode
+	DeleteOrderFail        NewErrorCode
+	GetOrderListError      NewErrorCode
+	UpdateOrderFail        NewErrorCode
 }
 
 var Code = Errorcode{
@@ -70,16 +72,17 @@ var Code = Errorcode{
 	RedisSubscribeFail:     NewErrorCode{1011, "Redis Subscribe Fail"},      // Redis Queue Fail
 	QueueStop:              NewErrorCode{1012, "Queue Stop"},                // Queue Stop
 
-	// 2000 會員錯誤代碼
-	GetUserListError: NewErrorCode{2000, "Get User List Error"}, // 取會員清單錯誤
-	CreateUserFail:   NewErrorCode{2001, "Create User Fail"},    // 建立會員失敗
-	UpdateUserFail:   NewErrorCode{2002, "Update User Fail"},    // 更新會員失敗
+	// 2000 產品錯誤代碼
+	GetProductByIdError: NewErrorCode{2000, "Get Product By Id Error"}, // 透過產品 id 取產品資料錯誤
+	ProductNotExist:     NewErrorCode{2001, "Product Not Exist"},       // 產品不存在
 
 	// 3000 訂單錯誤代碼
-	IllegalAmount:   NewErrorCode{3000, "Illegal Amount"},    // 不合法的金額
-	CreateOrderFail: NewErrorCode{3001, "Create Order Fail"}, // 建立訂單錯誤
+	IllegalAmount:     NewErrorCode{3000, "Illegal Amount"},        // 不合法的金額
+	CreateOrderFail:   NewErrorCode{3001, "Create Order Fail"},     // 建立訂單錯誤
+	GetOrderByIdError: NewErrorCode{3002, "Get Order By Id Error"}, // 透過 id 取訂單資料錯誤
+	CanNotDeleteOrder: NewErrorCode{3003, "Can Not Delete Order"},  // 禁止取消訂單
+	DeleteOrderFail:   NewErrorCode{3004, "Delete Order Fail"},     // 刪除訂單失敗
+	GetOrderListError: NewErrorCode{3005, "Get Order List Error"},  // 取訂單清單錯誤
+	UpdateOrderFail:   NewErrorCode{3006, "Update Order Fail"},     // 更新訂單錯誤
 
-	// 4000 產品錯誤代碼
-	GetProductByIdError: NewErrorCode{4000, "Get Product By Id Error"}, // 透過產品 id 取產品資料錯誤
-	ProductNotExist:     NewErrorCode{4001, "Product Not Exist"},       // 產品不存在
 }

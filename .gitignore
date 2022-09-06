@@ -21,6 +21,7 @@
 /docs/*
 /.vscode
 /storage
+/tmp
 # /go.sum
 
 ### Govendor ###

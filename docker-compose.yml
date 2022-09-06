@@ -18,29 +18,7 @@ services:
     networks:
       - web_service
 
-  # golang-modeltv-all:
-  #   build:
-  #     context: .
-  #   container_name: ${PROJECT_NAME}_${SERVICE_NAME}
-  #   restart: always
-  #   ports:
-  #     - 8088:8088
-  #   environment:
-  #     - ENV=${ENV} # 各站環境變數
-  #     - SERVICE=all
-  #     - PROJECT_NAME=${PROJECT_NAME} # 專案名稱
-  #   working_dir: /go/src/${PROJECT_NAME}
-  #   volumes:
-  #     - .:/go/src/${PROJECT_NAME}
-  #   labels:
-  #     - "traefik.http.routers.golang-${PROJECT_NAME}-all.rule=Host(`${PROJECT_NAME}.local.com`)"
-  #     - "traefik.http.services.golang-${PROJECT_NAME}-all.loadbalancer.server.port=8088"
-  #   networks:
-  #     - web_service
-  #   command: "air -c .air.toml"
-
-
-  golang-order-http:
+  golang-modeltv-all:
     build:
       context: .
     container_name: ${PROJECT_NAME}_${SERVICE_NAME}
@@ -49,38 +27,60 @@ services:
       - 9999:8080
     environment:
       - ENV=${ENV} # 各站環境變數
-      - SERVICE=http
+      - SERVICE=all
       - PROJECT_NAME=${PROJECT_NAME} # 專案名稱
     working_dir: /go/src/${PROJECT_NAME}
     volumes:
       - .:/go/src/${PROJECT_NAME}
     labels:
-      - "traefik.http.routers.golang-${PROJECT_NAME}-http.rule=Host(`${PROJECT_NAME}.local.com`)"
-      - "traefik.http.services.golang-${PROJECT_NAME}-http.loadbalancer.server.port=8080"
+      - "traefik.http.routers.golang-${PROJECT_NAME}-all.rule=Host(`${PROJECT_NAME}.local.com`)"
+      - "traefik.http.services.golang-${PROJECT_NAME}-all.loadbalancer.server.port=8088"
     networks:
       - web_service
     command: "air -c .air.toml"
 
-  golang-order-queue:
-    build:
-      context: .
-    container_name: ${PROJECT_NAME}_${SERVICE_NAME}
-    restart: always
-    # ports:
-    #   - 9999:8080
-    environment:
-      - ENV=${ENV} # 各站環境變數
-      - SERVICE=queue
-      - PROJECT_NAME=${PROJECT_NAME} # 專案名稱
-    working_dir: /go/src/${PROJECT_NAME}
-    volumes:
-      - .:/go/src/${PROJECT_NAME}
-    labels:
-      - "traefik.http.routers.golang-${PROJECT_NAME}-queue.rule=Host(`${PROJECT_NAME}.local.com`)"
-      - "traefik.http.services.golang-${PROJECT_NAME}-queue.loadbalancer.server.port=8080"
-    networks:
-      - web_service
-    command: "air -c .air.toml"
+
+  # golang-order-http:
+  #   build:
+  #     context: .
+  #   container_name: ${PROJECT_NAME}_${SERVICE_NAME}
+  #   restart: always
+  #   ports:
+  #     - 9999:8080
+  #   environment:
+  #     - ENV=${ENV} # 各站環境變數
+  #     - SERVICE=http
+  #     - PROJECT_NAME=${PROJECT_NAME} # 專案名稱
+  #   working_dir: /go/src/${PROJECT_NAME}
+  #   volumes:
+  #     - .:/go/src/${PROJECT_NAME}
+  #   labels:
+  #     - "traefik.http.routers.golang-${PROJECT_NAME}-http.rule=Host(`${PROJECT_NAME}.local.com`)"
+  #     - "traefik.http.services.golang-${PROJECT_NAME}-http.loadbalancer.server.port=8080"
+  #   networks:
+  #     - web_service
+  #   command: "air -c .air.toml"
+
+  # golang-order-queue:
+  #   build:
+  #     context: .
+  #   container_name: ${PROJECT_NAME}_${SERVICE_NAME}
+  #   restart: always
+  #   # ports:
+  #   #   - 9999:8080
+  #   environment:
+  #     - ENV=${ENV} # 各站環境變數
+  #     - SERVICE=queue
+  #     - PROJECT_NAME=${PROJECT_NAME} # 專案名稱
+  #   working_dir: /go/src/${PROJECT_NAME}
+  #   volumes:
+  #     - .:/go/src/${PROJECT_NAME}
+  #   labels:
+  #     - "traefik.http.routers.golang-${PROJECT_NAME}-queue.rule=Host(`${PROJECT_NAME}.local.com`)"
+  #     - "traefik.http.services.golang-${PROJECT_NAME}-queue.loadbalancer.server.port=8080"
+  #   networks:
+  #     - web_service
+  #   command: "air -c .air.toml"
 
   redis-order:
     image: redis:alpine
@@ -89,6 +89,8 @@ services:
     sysctls:
       net.core.somaxconn: 4096
     restart: always
+    ports:
+      - 6379:6379
     volumes:
       - ${VOLUME_PATH}/redis:/data
       - ./docker/redis.conf:/usr/local/etc/redis/redis.conf

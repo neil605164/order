@@ -8,8 +8,6 @@ import (
 	"order/app/global/structer"
 	"order/app/models"
 	"time"
-
-	jsoniter "github.com/json-iterator/go"
 )
 
 // CreateUser 創立 user
@@ -44,19 +42,17 @@ func (b *business) CreateOrder(raw structer.CreateOrderReq) (apiErr errorcode.Er
 		Status:    global.OrderUnpaid,
 	}
 
-	orderMap, _ := helper.StructToMap(order)
-
 	// 寫入 order db
-	if apiErr = b.order.CreateOrder(orderMap); apiErr != nil {
+	if apiErr = b.order.CreateOrder(order); apiErr != nil {
 		return
 	}
 
 	// 丟入 queue 進行撮合
-	byteData, _ := jsoniter.Marshal(orderMap)
-	if err := b.cache.LPush(global.RedisQueueChannel, byteData); err != nil {
-		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.ProductNotExist, nil, raw)
-		return
-	}
+	// byteData, _ := jsoniter.Marshal(orderMap)
+	// if err := b.cache.LPush(global.RedisQueueChannel, byteData); err != nil {
+	// 	apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.ProductNotExist, nil, raw)
+	// 	return
+	// }
 
 	return
 }

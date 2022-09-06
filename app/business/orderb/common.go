@@ -15,6 +15,12 @@ var once sync.Once
 type IOrder interface {
 	// 建立訂單
 	CreateOrder(raw structer.CreateOrderReq) (apiErr errorcode.Error)
+	// 取 order list
+	GetOrderList() (resp []structer.OrderList, apiErr errorcode.Error)
+	// 透過 id 取 order 資料
+	GetOrderById(id string) (resp *structer.OrderList, apiErr errorcode.Error)
+	// 透過 id 刪除訂單
+	DeleteOrderById(id string) (apiErr errorcode.Error)
 }
 
 type business struct {

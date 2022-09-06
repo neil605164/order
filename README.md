@@ -64,6 +64,16 @@ jobs = []*CronJob{
 ENV=local go run migrations/init.go
 ```
 
+## 新增假資料
+```
+INSERT INTO `products` (`id`, `name`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES (NULL, '產品名稱一', '2000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
+```
+
 ---
 ## DB 結構關聯圖
 - 文件 [連結](https://app.diagrams.net/#G1zoB9UmNjqfcUc-vgMqUYULoSbZvaRm9t)
+
+## api 文件連結
+
+**注意** 必須啟動服務後，連結才可以開啟
+- 文件 [連結](http://localhost:9999/api/v1/swagger/index.html#/order/post_order)

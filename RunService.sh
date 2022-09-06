@@ -21,7 +21,7 @@ SERVICE_LIST=('http' 'queue')
 # 服務 ENV
 SERVICE_ENV="local-docker"
 # 服務名稱
-SERVICE_NAME=""
+SERVICE_NAME="all"
 # Log 檔案名稱，不指定就吃 code 預設
 LOG_NAME=""
 # 啟動服務的指令
@@ -131,7 +131,7 @@ docker network ls | grep "web_service" >/dev/null 2>&1
 # ChooseENV
 
 ## 選擇啟動的服務類型
-ChooseService
+# ChooseService
 
 ## 自動下載不存在本地端的 package
 # go mod download
@@ -151,5 +151,8 @@ else
     echo "COMMAND"="go run main.go">>.env
 fi
 
-echo "ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d golang-order-$SERVICE_NAME"
-ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d golang-order-$SERVICE_NAME
+echo "ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d"
+ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d
+
+# echo "ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d golang-order-$SERVICE_NAME"
+# ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d golang-order-$SERVICE_NAME

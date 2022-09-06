@@ -16,7 +16,7 @@ import (
 // @Tags     order
 // @Produce  json
 // @Param body body structer.CreateOrderReq true "新增訂單"
-// @Success      200  {object} structer.UserList
+// @Success      200  {object} structer.APIResult
 // @Failure      400  {object} structer.APIResult "異常錯誤"
 // @Router       /order [post]
 func CreateOrder(c *gin.Context) {
