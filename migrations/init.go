@@ -20,8 +20,8 @@ func main() {
 	mysql := database.Instance()
 	db, _ := mysql.DBConn()
 	createTable(db,
-		models.Order{},
 		models.Product{},
+		models.Order{},
 	)
 
 	println("資料表創建成功...")

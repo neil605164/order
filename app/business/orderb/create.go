@@ -8,6 +8,8 @@ import (
 	"order/app/global/structer"
 	"order/app/models"
 	"time"
+
+	jsoniter "github.com/json-iterator/go"
 )
 
 // CreateUser 創立 user
@@ -43,16 +45,33 @@ func (b *business) CreateOrder(raw structer.CreateOrderReq) (apiErr errorcode.Er
 	}
 
 	// 寫入 order db
-	if apiErr = b.order.CreateOrder(order); apiErr != nil {
+	order, apiErr = b.order.CreateOrder(order)
+	if apiErr != nil {
+		return
+	}
+
+	// 處理丟入 queue 資料
+	byteData, err := jsoniter.Marshal(order)
+	if err != nil {
+		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.JSONMarshalError, nil, raw)
+		return
+	}
+	queueData := structer.RedisLPushFormat{
+		Type: global.OrderQueue,
+		Data: order,
+	}
+
+	byteData, err = jsoniter.Marshal(queueData)
+	if err != nil {
+		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.JSONMarshalError, nil, raw)
 		return
 	}
 
 	// 丟入 queue 進行撮合
-	// byteData, _ := jsoniter.Marshal(orderMap)
-	// if err := b.cache.LPush(global.RedisQueueChannel, byteData); err != nil {
-	// 	apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.ProductNotExist, nil, raw)
-	// 	return
-	// }
+	if err := b.cache.LPush(global.RedisQueueChannel, byteData); err != nil {
+		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.OrderPushIntoQueueFail, nil, string(byteData))
+		return
+	}
 
 	return
 }

@@ -41,6 +41,7 @@ func Run() {
 
 	case "all":
 		// go schedule.Run()
+		go redisqueue.Run(context.Background())
 		server.Run()
 	default:
 		_ = helper.ErrorHandle(global.FatalLog, errorcode.Code.ServiceIsNotExist, "")

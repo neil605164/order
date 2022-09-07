@@ -97,3 +97,14 @@ const (
 const (
 	RedisQueueChannel = "queue"
 )
+
+/** Queue 類型 **/
+const (
+	OrderQueue = "order"
+)
+
+/** 訂單行為 **/
+const (
+	OrderSellBehavior = "sell" // 賣單
+	OrderBuyBehavior  = "buy"  // 收款
+)

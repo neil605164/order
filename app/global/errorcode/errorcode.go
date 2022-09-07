@@ -7,41 +7,44 @@ type NewErrorCode struct {
 }
 
 type Errorcode struct {
-	Success                NewErrorCode
-	UnExpectedError        NewErrorCode
-	PermissionDenied       NewErrorCode
-	DBConnectError         NewErrorCode
-	DBTableNotExist        NewErrorCode
-	ServiceIsNotExist      NewErrorCode
-	CronJobError           NewErrorCode
-	CronJobStart           NewErrorCode
-	CronJobStop            NewErrorCode
-	CronJobPrepareStop     NewErrorCode
-	CronJobFuncNotExist    NewErrorCode
-	CronJobSuccessExecute  NewErrorCode
-	HTTPServerStart        NewErrorCode
-	TCPPortDuplicate       NewErrorCode
-	PrePareShutDownService NewErrorCode
-	ServiceAlreadyShutdown NewErrorCode
-	JSONMarshalError       NewErrorCode
-	JSONUnMarshalError     NewErrorCode
-	GetTimeZoneError       NewErrorCode
-	ParseTimeError         NewErrorCode
-	CryptionError          NewErrorCode
-	BindParamError         NewErrorCode
-	ValidateParamError     NewErrorCode
-	IllegalAmount          NewErrorCode
-	GetProductByIdError    NewErrorCode
-	ProductNotExist        NewErrorCode
-	CreateOrderFail        NewErrorCode
-	RedisSubscribeStart    NewErrorCode
-	RedisSubscribeFail     NewErrorCode
-	QueueStop              NewErrorCode
-	GetOrderByIdError      NewErrorCode
-	CanNotDeleteOrder      NewErrorCode
-	DeleteOrderFail        NewErrorCode
-	GetOrderListError      NewErrorCode
-	UpdateOrderFail        NewErrorCode
+	Success                     NewErrorCode
+	UnExpectedError             NewErrorCode
+	PermissionDenied            NewErrorCode
+	DBConnectError              NewErrorCode
+	DBTableNotExist             NewErrorCode
+	ServiceIsNotExist           NewErrorCode
+	CronJobError                NewErrorCode
+	CronJobStart                NewErrorCode
+	CronJobStop                 NewErrorCode
+	CronJobPrepareStop          NewErrorCode
+	CronJobFuncNotExist         NewErrorCode
+	CronJobSuccessExecute       NewErrorCode
+	HTTPServerStart             NewErrorCode
+	TCPPortDuplicate            NewErrorCode
+	PrePareShutDownService      NewErrorCode
+	ServiceAlreadyShutdown      NewErrorCode
+	JSONMarshalError            NewErrorCode
+	JSONUnMarshalError          NewErrorCode
+	GetTimeZoneError            NewErrorCode
+	ParseTimeError              NewErrorCode
+	CryptionError               NewErrorCode
+	BindParamError              NewErrorCode
+	ValidateParamError          NewErrorCode
+	IllegalAmount               NewErrorCode
+	GetProductByIdError         NewErrorCode
+	ProductNotExist             NewErrorCode
+	CreateOrderFail             NewErrorCode
+	RedisSubscribeStart         NewErrorCode
+	RedisSubscribeFail          NewErrorCode
+	QueueStop                   NewErrorCode
+	GetOrderByIdError           NewErrorCode
+	CanNotDeleteOrder           NewErrorCode
+	DeleteOrderFail             NewErrorCode
+	GetOrderListError           NewErrorCode
+	UpdateOrderFail             NewErrorCode
+	OrderPushIntoQueueFail      NewErrorCode
+	RedisQueueTypeNotRegister   NewErrorCode
+	RedisOrderQueueUnexpectFail NewErrorCode
 }
 
 var Code = Errorcode{
@@ -77,12 +80,17 @@ var Code = Errorcode{
 	ProductNotExist:     NewErrorCode{2001, "Product Not Exist"},       // 產品不存在
 
 	// 3000 訂單錯誤代碼
-	IllegalAmount:     NewErrorCode{3000, "Illegal Amount"},        // 不合法的金額
-	CreateOrderFail:   NewErrorCode{3001, "Create Order Fail"},     // 建立訂單錯誤
-	GetOrderByIdError: NewErrorCode{3002, "Get Order By Id Error"}, // 透過 id 取訂單資料錯誤
-	CanNotDeleteOrder: NewErrorCode{3003, "Can Not Delete Order"},  // 禁止取消訂單
-	DeleteOrderFail:   NewErrorCode{3004, "Delete Order Fail"},     // 刪除訂單失敗
-	GetOrderListError: NewErrorCode{3005, "Get Order List Error"},  // 取訂單清單錯誤
-	UpdateOrderFail:   NewErrorCode{3006, "Update Order Fail"},     // 更新訂單錯誤
+	IllegalAmount:          NewErrorCode{3000, "Illegal Amount"},             // 不合法的金額
+	CreateOrderFail:        NewErrorCode{3001, "Create Order Fail"},          // 建立訂單錯誤
+	GetOrderByIdError:      NewErrorCode{3002, "Get Order By Id Error"},      // 透過 id 取訂單資料錯誤
+	CanNotDeleteOrder:      NewErrorCode{3003, "Can Not Delete Order"},       // 禁止取消訂單
+	DeleteOrderFail:        NewErrorCode{3004, "Delete Order Fail"},          // 刪除訂單失敗
+	GetOrderListError:      NewErrorCode{3005, "Get Order List Error"},       // 取訂單清單錯誤
+	UpdateOrderFail:        NewErrorCode{3006, "Update Order Fail"},          // 更新訂單錯誤
+	OrderPushIntoQueueFail: NewErrorCode{3007, "Order Push Into Queue Fail"}, // 丟訊息至 queue 失敗
+
+	// 4000 Queue 錯誤代碼
+	RedisQueueTypeNotRegister:   NewErrorCode{4000, "Redis Queue Type Not Register"},   // Queue type 未註冊
+	RedisOrderQueueUnexpectFail: NewErrorCode{4001, "Redis Order Queue Unexpect Fail"}, // Order Queue 不預期的錯誤
 
 }

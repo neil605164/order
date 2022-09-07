@@ -42,23 +42,6 @@ $ sh RunService.sh
 ```
 
 ---
-## 背景註冊
-/internal/schedule/job.go
-
-```
-// 載入所有排程
-jobs = []*CronJob{
-    // 範例
-    // {
-    // 	Name:     "印出 hello world", // 排程名稱
-    // 	Spec:     "@every 10s",     // 排程時間
-    // 	FuncName: task.HelloWorld,  // 對應的 func 名稱
-    // 	isRetry:  true,             // 是否可重複執行
-    // },
-}
-```
-
----
 ## 建立 db table & 關聯
 ```
 ENV=local go run migrations/init.go
@@ -66,7 +49,7 @@ ENV=local go run migrations/init.go
 
 ## 新增假資料
 ```
-INSERT INTO `products` (`id`, `name`, `amount`, `created_at`, `updated_at`, `deleted_at`) VALUES (NULL, '產品名稱一', '2000', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
+INSERT INTO `products` (`id`, `name`, `created_at`, `updated_at`, `deleted_at`) VALUES (NULL, '產品名稱一', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
 ```
 
 ---

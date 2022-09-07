@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"order/app/business/orderb"
 	"order/app/global"
 	"order/app/global/errorcode"
 	"order/app/global/helper"
@@ -26,7 +27,7 @@ func Run(ctx context.Context) {
 
 	_ = helper.ErrorHandle(global.SuccessLog, errorcode.Code.RedisSubscribeStart, "🔔 redis subscribe success start 🔔")
 
-	sub := structer.RedisPubFormat{}
+	sub := structer.RedisLPushFormat{}
 	var c chan string
 	for {
 
@@ -36,6 +37,34 @@ func Run(ctx context.Context) {
 			if err := jsoniter.Unmarshal([]byte(msg), &sub); err != nil {
 				_ = helper.ErrorHandle(global.WarnLog, errorcode.Code.JSONUnMarshalError, err.Error())
 				return
+			}
+
+			switch sub.Type {
+			case global.OrderQueue:
+				defer func() {
+					if err := recover(); err != nil {
+						_ = helper.ErrorHandle(global.WarnLog, errorcode.Code.RedisOrderQueueUnexpectFail, err)
+					}
+				}()
+
+				byteData, err := jsoniter.Marshal(sub.Data)
+				if err != nil {
+					_ = helper.ErrorHandle(global.WarnLog, errorcode.Code.JSONMarshalError, err)
+					return
+				}
+
+				bus := orderb.Instance()
+				_ = bus.MatchOrder(byteData)
+
+			default:
+				func() {
+					defer func() {
+						if err := recover(); err != nil {
+							_ = helper.ErrorHandle(global.WarnLog, errorcode.Code.RedisQueueTypeNotRegister, nil)
+						}
+					}()
+				}()
+
 			}
 
 		default:

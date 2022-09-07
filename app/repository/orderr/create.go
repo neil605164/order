@@ -8,17 +8,17 @@ import (
 )
 
 // CreateOrder 建立訂單
-func (r *repo) CreateOrder(order models.Order) (apiErr errorcode.Error) {
+func (r *repo) CreateOrder(order models.Order) (models.Order, errorcode.Error) {
 	db, apiErr := r.DB.DBConn()
 	if apiErr != nil {
-		return
+		return models.Order{}, apiErr
 	}
 
 	// 建立訂單
 	if err := db.Create(&order).Error; err != nil {
 		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.CreateOrderFail, err, order)
-		return
+		return models.Order{}, apiErr
 	}
 
-	return nil
+	return order, nil
 }

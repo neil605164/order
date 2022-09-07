@@ -21,6 +21,8 @@ type IOrder interface {
 	GetOrderById(id string) (resp *structer.OrderList, apiErr errorcode.Error)
 	// 透過 id 刪除訂單
 	DeleteOrderById(id string) (apiErr errorcode.Error)
+	// 撮合訂單
+	MatchOrder(byteData []byte) (apiErr errorcode.Error)
 }
 
 type business struct {

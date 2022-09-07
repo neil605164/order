@@ -27,53 +27,6 @@ LOG_NAME=""
 # 啟動服務的指令
 COMMAND=""
 
-## 選擇環境
-ChooseENV(){
-    echo -e "\033[1;35m======================\n"
-
-      # 取得全部目錄的字串
-    envs=$(ls -l $WORK_PATH/env | awk '/^d/ {print $NF}' | grep -v "common")
-
-    # 執行選項
-    printf "\033[1;33m"
-    echo -e "請選擇工具代碼：\n"
-
-    # 顯示全部的資料夾清單 + 選擇專案
-    select env in $envs
-    do
-        # 專案名稱
-        SERVICE_ENV=$env
-        break
-    done
-
-}
-
-## 選擇啟動的服務類型
-ChooseService(){
-    echo -e "\033[1;35m======================\n"
-
-    # 執行選項
-    printf "\033[1;33m"
-    echo -e "請選擇服務代碼：\n"
-
-    # 顯示全部的資料夾清單 + 選擇專案
-    select name in ${SERVICE_LIST[@]}
-    do
-    
-        LOG_NAME=$name
-        if [ "$name" = "http" ]
-        then
-            LOG_NAME=""
-        fi
-         
-        # 專案名稱
-        SERVICE_NAME=$name
-        
-        break
-    done
-}
-
-
 # 執行 RunService.sh 的目錄(透過readlink 獲取執行腳本的絕對路徑，再透過dirname取出目錄)
 if [ "$SYSTEM" = "Linux" ]
 then
@@ -127,11 +80,6 @@ docker network ls | grep "web_service" >/dev/null 2>&1
     fi
 
 
-## 選擇 ENV
-# ChooseENV
-
-## 選擇啟動的服務類型
-# ChooseService
 
 ## 自動下載不存在本地端的 package
 # go mod download
@@ -153,6 +101,3 @@ fi
 
 echo "ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d"
 ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d
-
-# echo "ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d golang-order-$SERVICE_NAME"
-# ENV=$SERVICE_ENV USER_PATH=$USER_PATH VOLUME_PATH=$VOLUME_PATH  docker-compose up -d golang-order-$SERVICE_NAME

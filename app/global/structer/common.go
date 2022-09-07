@@ -51,7 +51,7 @@ type RespStatus struct {
 	LogIDentity string    `json:"logID" example:"qw13er65tyui74rg22o"`
 }
 
-type RedisPubFormat struct {
+type RedisLPushFormat struct {
 	Type string
 	Data interface{}
 }

@@ -15,7 +15,7 @@ func (r *repo) UpdateOrderById(id string, order map[string]interface{}) (apiErr 
 		return
 	}
 
-	if err := db.Model(&models.Order{}).Updates(order).Error; err != nil {
+	if err := db.Model(&models.Order{}).Where("id = ?", id).Updates(order).Error; err != nil {
 		apiErr = helper.ErrorHandle(global.WarnLog, errorcode.Code.UpdateOrderFail, err, id)
 		return
 	}
